@@ -1,113 +1,108 @@
-#include <bits/stdc++.h>
-using namespace std;
+//C++ Array Declaration --> dataType arrayName[arraySize];
+int x[6];
+int x[6] = {19, 10, 8, 17, 9, 15};
+int x[] = {19, 10, 8, 17, 9, 15};
 
-class DynamicArray {
-    int *arr; //creating array pointer
-    int capacity; // holds the actual size of the array.
-    int totalNumbers; // hold the total number of elements present in array.
+//access
+array[index];
 
-public:
-    DynamicArray() {
-        arr = new int[2];
-        capacity = 2;
-        totalNumbers = 0;
-    }
+//push (cannot push and pop as it has c++ has static arrays anyhow we can use vectors)
+#include <iostream>
+#include <vector>
+std::vector< int > arr;
+arr.push_back(1);
+arr.push_back(2);
+arr.push_back(3);
+//1,2,3 are pushed into the array
 
-    void push(int data) {
-        if(totalNumbers == capacity) {
-            // check for end case when initially array is filled with assigned capacity
-            int *temp = new int[2 * capacity];
-            for(int i = 0; i < capacity; i++) {
-                temp[i] = arr[i];   //copy array elements in new array -> temp
-            }
-            delete[] arr; //delete memory allocated for older array
-            capacity = capacity * 2;
-            arr = temp; // pointing our arr to newly allocated memory
-        }
-        arr[totalNumbers] = data; //inserting data.
-        totalNumbers++;
-    }
+//pop (cannot push and pop as it has c++ has static arrays anyhow we can use vectors)
+#include <vector>
+vector<int> myvector{ 1, 2, 3, 4, 5 };
+myvector.pop_back();
+//array becomes 1,2,3,4
 
-    void push(int data, int index) {
-        // in this function we replace the number which is already present in that index.
-        if(index == capacity) {
-            push(data); // checking for end case.
-        }
-        else {
-            arr[index] = data; // insert data
-        }
-    }
-
-    void insertElement(int data, int index) {
-        // in this function we don't replace the original number
-        if(index == capacity) {
-            push(data);
-        }
-        for(int i = totalNumbers; i > index; i--) {
-            arr[i] = arr[i - 1];
-        }
-        arr[index] = data;
-        totalNumbers++;
-    }
-
-    int pop() {
-        // return number at the end of array and reduces the size of array.
-        int ele = arr[totalNumbers-1];
-        totalNumbers--;
-        return ele;
-    }
-
-    void pop(int index) {
-        // deleting element from particular index
-        if(index > -1 && index < totalNumbers) {
-            totalNumbers--;
-            for(int j = index; j < totalNumbers; j++) {
-                arr[j] = arr[j + 1];
-            }
-        }
-    }
-
-    int get(int index) {
-        // get the data of the particular index.
-        if(index > -1 && index < capacity) {
-            return arr[index];
-        }
-    }
-
-    int length() {
-        // get the size of array.
-        return totalNumbers;
-    }
-
-    void print() {
-        for(int i = 0; i < totalNumbers; i++) {
-            cout<<arr[i]<<"  ";
-        }
-        cout<<endl;
-    }
-    // end of class
- };
-
- int main() {
-    DynamicArray a; // creating instance of the class.
-    a.push(10);
-    a.push(20);
-    a.push(30);
-    a.push(40);
-    a.insertElement(50, 2);
-    cout<<"The array is: ";
-    a.print();
-
-    int ele = a.pop();// removing last element
-    cout<<"Element Deleted: "<<ele<<endl;
-    cout<<"The array after deletion is: ";
-    a.print();
-
-    a.pop(0);
-    cout<<"The array after deleting index-0 element: ";
-    a.print();
-
-    cout<<"The size of array is: "<<a.length()<<endl;
-
+//insert
+#include <stdio.h>
+int main()
+{
+    int arr[100];
+    int i, item, pos, size=7;
+ 
+    printf("Enter 7 elements: ");
+    // reading array
+    for (i = 0; i < size; i++)
+        scanf("%d",&arr[i]);
+ 
+    // print the original array
+    printf("Array before insertion: ");
+    
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+ 
+    // read element to be inserted
+    printf("Enter the element to be inserted: ");
+    scanf("%d",&item);
+    
+    // read position at which element is to be inserted
+    printf("Enter the position at which the element is to be inserted: ");
+    scanf("%d",&pos);
+ 
+    // increase the size
+    size++;
+ 
+    // shift elements forward
+    for (i = size-1; i >= pos; i--)
+        arr[i] = arr[i - 1];
+ 
+    // insert item at position
+    arr[pos - 1] = item;
+ 
+    // print the updated array
+    printf("Array after insertion: ");
+    
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+ 
     return 0;
- }
+}
+
+//delete
+#include<stdio.h>
+int main()
+{
+    
+    int key, i, pos = -1, size=5;
+    int arr[5] = {1, 20, 5, 78, 30};
+    printf("Array before deletion: ");
+    
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+    
+    printf("Enter element to delete: ");
+    scanf("%d",&key);
+    // traverse the array
+    // if any element matches the key, store its position
+    for(i = 0; i < size; i++)
+    {
+        if(arr[i] == key)
+        {
+            pos = i;
+            break;
+        }
+    }
+    if(pos != -1)
+    {
+        //shift elements backwards by one position
+        for(i = pos; i < size - 1; i++)
+            arr[i] = arr[i+1];
+        printf("Array after deletion: ");
+        for(i = 0; i < size - 1; i++)
+            printf("%d ",arr[i]);
+    }
+    else
+        printf("Element Not Found\n");
+    return 0;
+}
